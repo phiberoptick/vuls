@@ -9,7 +9,7 @@ require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/aquasecurity/fanal v0.0.0-20220404155252-996e81f58b02
 	github.com/aquasecurity/go-dep-parser v0.0.0-20220302151315-ff6d77c26988
-	github.com/aquasecurity/trivy v0.25.1
+	github.com/aquasecurity/trivy v0.25.2
 	github.com/aquasecurity/trivy-db v0.0.0-20220327074450-74195d9604b2
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/aws/aws-sdk-go v1.43.31

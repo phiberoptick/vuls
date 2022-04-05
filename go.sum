@@ -162,8 +162,8 @@ github.com/aquasecurity/go-pep440-version v0.0.0-20210121094942-22b2f8951d46/go.
 github.com/aquasecurity/go-version v0.0.0-20201107203531-5e48ac5d022a/go.mod h1:9Beu8XsUNNfzml7WBf3QmyPToP1wm1Gj/Vc5UJKqTzU=
 github.com/aquasecurity/go-version v0.0.0-20210121072130-637058cfe492 h1:rcEG5HI490FF0a7zuvxOxen52ddygCfNVjP0XOCMl+M=
 github.com/aquasecurity/go-version v0.0.0-20210121072130-637058cfe492/go.mod h1:9Beu8XsUNNfzml7WBf3QmyPToP1wm1Gj/Vc5UJKqTzU=
-github.com/aquasecurity/trivy v0.25.1 h1:d5yxTfoqQ7IYKCUcpP3fsBbtXgmTN0aYCUA2m1UMXo4=
-github.com/aquasecurity/trivy v0.25.1/go.mod h1:t3i9EvHBCbaqQ9j2DSdLpcgawCz+UjV9XI4yLXF8H8k=
+github.com/aquasecurity/trivy v0.25.2 h1:+8p4s0z0ZV8kDyPFdn9u9bdrd/8Tl+JoTq6CbY0zuQU=
+github.com/aquasecurity/trivy v0.25.2/go.mod h1:t3i9EvHBCbaqQ9j2DSdLpcgawCz+UjV9XI4yLXF8H8k=
 github.com/aquasecurity/trivy-db v0.0.0-20220327074450-74195d9604b2 h1:q2Gza4V8uO5C1COzC2HeTbQgJIrmC6dTWaXZ8ujiWu0=
 github.com/aquasecurity/trivy-db v0.0.0-20220327074450-74195d9604b2/go.mod h1:EwiQRdzVq6k7cKOMjkss8LjWMt2FUW7NaYwE7HfZZvk=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
