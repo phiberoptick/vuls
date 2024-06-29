@@ -42,6 +42,10 @@ import (
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/golang/mod"
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle"
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/pom"
+
+	// Julia is supported for SBOM, not for vulnerability scanning
+	// https://github.com/aquasecurity/trivy/blob/v0.52.0/pkg/detector/library/driver.go#L84-L86
+	// _ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/julia/pkg"
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/nodejs/npm"
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/nodejs/pnpm"
 	_ "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/nodejs/yarn"
@@ -91,9 +95,6 @@ type osPackages struct {
 
 	// installed source packages (Debian based only)
 	SrcPackages models.SrcPackages
-
-	// enabled dnf modules or packages
-	EnabledDnfModules []string
 
 	// Detected Vulnerabilities Key: CVE-ID
 	VulnInfos models.VulnInfos
@@ -545,7 +546,6 @@ func (l *base) convertToModel() models.ScanResult {
 		RunningKernel:     l.Kernel,
 		Packages:          l.Packages,
 		SrcPackages:       l.SrcPackages,
-		EnabledDnfModules: l.EnabledDnfModules,
 		WordPressPackages: l.WordPress,
 		LibraryScanners:   l.LibraryScanners,
 		WindowsKB:         l.windowsKB,
@@ -626,7 +626,7 @@ func (l *base) parseSystemctlStatus(stdout string) string {
 	return ss[1]
 }
 
-var trivyLoggerInit = sync.OnceValue(func() error { return tlog.InitLogger(config.Conf.Debug, config.Conf.Quiet) })
+var trivyLoggerInit = sync.OnceFunc(func() { tlog.InitLogger(config.Conf.Debug, config.Conf.Quiet) })
 
 func (l *base) scanLibraries() (err error) {
 	if len(l.LibraryScanners) != 0 {
@@ -640,9 +640,7 @@ func (l *base) scanLibraries() (err error) {
 
 	l.log.Info("Scanning Language-specific Packages...")
 
-	if err := trivyLoggerInit(); err != nil {
-		return xerrors.Errorf("Failed to init trivy logger. err: %w", err)
-	}
+	trivyLoggerInit()
 
 	found := map[string]bool{}
 	detectFiles := l.ServerInfo.Lockfiles

@@ -67,7 +67,7 @@ func RunTui(results models.ScanResults) subcommands.ExitStatus {
 func keybindings(g *gocui.Gui) (err error) {
 	errs := []error{}
 
-	// Move beetween views
+	// Move between views
 	errs = append(errs, g.SetKeybinding("side", gocui.KeyTab, gocui.ModNone, nextView))
 	//  errs = append(errs, g.SetKeybinding("side", gocui.KeyCtrlH, gocui.ModNone, previousView))
 	//  errs = append(errs, g.SetKeybinding("side", gocui.KeyCtrlL, gocui.ModNone, nextView))
@@ -899,6 +899,7 @@ func setChangelogLayout(g *gocui.Gui) error {
 type dataForTmpl struct {
 	CveID            string
 	Cvsses           string
+	SSVC             []models.CveContentSSVC
 	Exploits         []models.Exploit
 	Metasploits      []models.Metasploit
 	Summary          string
@@ -945,10 +946,13 @@ func detailLines() (string, error) {
 			refsMap[ref.Link] = ref
 		}
 	}
-	if conts, found := vinfo.CveContents[models.Trivy]; found {
-		for _, cont := range conts {
-			for _, ref := range cont.References {
-				refsMap[ref.Link] = ref
+
+	for _, ctype := range models.GetCveContentTypes(string(models.Trivy)) {
+		if conts, found := vinfo.CveContents[ctype]; found {
+			for _, cont := range conts {
+				for _, ref := range cont.References {
+					refsMap[ref.Link] = ref
+				}
 			}
 		}
 	}
@@ -976,7 +980,7 @@ func detailLines() (string, error) {
 	table := uitable.New()
 	table.MaxColWidth = 100
 	table.Wrap = true
-	scores := append(vinfo.Cvss3Scores(), vinfo.Cvss2Scores()...)
+	scores := append(vinfo.Cvss40Scores(), append(vinfo.Cvss3Scores(), vinfo.Cvss2Scores()...)...)
 	var cols []interface{}
 	for _, score := range scores {
 		cols = []interface{}{
@@ -999,6 +1003,7 @@ func detailLines() (string, error) {
 	data := dataForTmpl{
 		CveID:       vinfo.CveID,
 		Cvsses:      fmt.Sprintf("%s\n", table),
+		SSVC:        vinfo.CveContents.SSVC(),
 		Summary:     fmt.Sprintf("%s (%s)", summary.Value, summary.Type),
 		Mitigation:  strings.Join(mitigations, "\n"),
 		PatchURLs:   vinfo.CveContents.PatchURLs(),
@@ -1023,6 +1028,17 @@ const mdTemplate = `
 CVSS Scores
 -----------
 {{.Cvsses }}
+
+{{if .SSVC}}
+SSVC
+-----------
+{{range $ssvc := .SSVC -}}
+* {{$ssvc.Type}}
+  Exploitation    : {{$ssvc.Value.Exploitation}}
+  Automatable     : {{$ssvc.Value.Automatable}}
+  TechnicalImpact : {{$ssvc.Value.TechnicalImpact}}
+{{end}}
+{{end}}
 
 Summary
 -----------

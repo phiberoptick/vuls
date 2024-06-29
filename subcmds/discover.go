@@ -152,14 +152,18 @@ func printConfigToml(ips []string) (err error) {
 
 # https://vuls.io/docs/en/usage-report.html#example-put-results-in-s3-bucket
 #[aws]
-#profile                = "default"
+#s3Endpoint             = "http://localhost:9000"
 #region                 = "ap-northeast-1"
+#profile                = "default"
+#credentialProvider     = "anonymous"
 #s3Bucket               = "vuls"
 #s3ResultsDir           = "/path/to/result"
 #s3ServerSideEncryption = "AES256"
+#s3UsePathStyle         = false
 
-# https://vuls.io/docs/en/usage-report.html#example-put-results-in-azure-blob-storage<Paste>
+# https://vuls.io/docs/en/usage-report.html#example-put-results-in-azure-blob-storage
 #[azure]
+#endpoint      = "https://default.blob.core.windows.net/"
 #accountName   = "default"
 #accountKey    = "xxxxxxxxxxxxxx"
 #containerName = "vuls"
