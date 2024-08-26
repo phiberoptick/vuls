@@ -1,6 +1,7 @@
 module github.com/future-architect/vuls
 
 go 1.21
+toolchain go1.22.5
 
 require (
 	github.com/3th1nk/cidr v0.2.0
@@ -51,7 +52,7 @@ require (
 	github.com/vulsio/go-msfdb v0.2.4-0.20240318121704-8bfc812656dc
 	github.com/vulsio/gost v0.4.6-0.20240318122017-91329ea18521
 	github.com/vulsio/goval-dictionary v0.9.5-0.20240318121903-ef7a85cb8246
-	go.etcd.io/bbolt v1.3.9
+	go.etcd.io/bbolt v1.3.11
 	go.uber.org/zap v1.27.0
 	golang.org/x/exp v0.0.0-20240318143956-a85f2c67cd81
 	golang.org/x/oauth2 v0.19.0
